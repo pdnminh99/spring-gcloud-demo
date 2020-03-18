@@ -2,37 +2,28 @@ package com.example.bookmanagement.Models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID uuid;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = true)
     private String publisher;
 
+    @Column(nullable = true)
     private Integer pagesCount;
 
+    @Column(nullable = false)
     private String author;
-
-//    public Book(@JsonProperty("title") String title,
-//                @JsonProperty("author") String author,
-//                @JsonProperty("publisher") String publisher) {
-//        this.title = title;
-//        this.author = author;
-//        this.publisher = publisher;
-//    }
-//
-//    public Book(@JsonProperty("title") String title,
-//                @JsonProperty("author") String author,
-//                @JsonProperty("publisher") String publisher,
-//                @JsonProperty("pages") int pagesCount) {
-//        this.title = title;
-//        this.author = author;
-//        this.publisher = publisher;
-//        this.pagesCount = pagesCount;
-//    }
 
     public Book(@JsonProperty("uuid") UUID uuid,
                 @JsonProperty("title") String title,
@@ -40,6 +31,26 @@ public class Book {
                 @JsonProperty("pagesCount") Integer pagesCount,
                 @JsonProperty("author") String author) {
         this.uuid = Objects.requireNonNullElse(uuid, UUID.randomUUID());
+        this.title = Objects.requireNonNullElse(title, "");
+        this.publisher = Objects.requireNonNullElse(publisher, "");
+        this.pagesCount = Objects.requireNonNullElse(pagesCount, 0);
+        this.author = Objects.requireNonNullElse(author, "");
+    }
+
+    public Book() {
+        super();
+    }
+
+    public Book(String title, String author, String publisher) {
+        this.title = Objects.requireNonNullElse(title, "");
+        this.publisher = Objects.requireNonNullElse(publisher, "");
+        this.author = Objects.requireNonNullElse(author, "");
+        pagesCount = null;
+        uuid = UUID.randomUUID();
+    }
+
+    public Book(String title, String author, String publisher, Integer pagesCount) {
+        this.uuid = UUID.randomUUID();
         this.title = Objects.requireNonNullElse(title, "");
         this.publisher = Objects.requireNonNullElse(publisher, "");
         this.pagesCount = Objects.requireNonNullElse(pagesCount, 0);

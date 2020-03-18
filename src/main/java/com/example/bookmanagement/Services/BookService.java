@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class BookService implements BookOperations {
+public class BookService {
 
     private final BookOperations databaseAccessObject;
 
@@ -19,38 +19,35 @@ public class BookService implements BookOperations {
         this.databaseAccessObject = databaseAccessObject;
     }
 
-    @Override
-    public List<Book> query(String keyword) {
-        return databaseAccessObject.query(keyword);
+//    public Iterable<Book> query(String keyword) {
+//        return databaseAccessObject.query(keyword);
+//    }
+
+    public Iterable<Book> query() {
+        return databaseAccessObject.findAll();
     }
 
-    @Override
-    public List<Book> query() {
-        return databaseAccessObject.query();
+    public Optional<Book> query(UUID uuid) {
+        return databaseAccessObject.findById(uuid);
     }
 
-    @Override
-    public Book query(UUID uuid) {
-        return databaseAccessObject.query(uuid);
+    public Book add(Book book) {
+        return databaseAccessObject.save(book);
     }
 
-    @Override
-    public boolean add(Book book) {
-        return databaseAccessObject.add(book);
+    public Book add(String title, String author, String publisher) {
+        return databaseAccessObject.save(new Book(title, author, publisher));
     }
 
-    @Override
-    public Book delete(UUID uuid) {
-        return databaseAccessObject.delete(uuid);
+    public Book add(String title, String author, String publisher, Integer pagesCount) {
+        return databaseAccessObject.save(new Book(title, author, publisher, pagesCount));
     }
 
-    @Override
-    public List<Book> delete(String title, String author, String publisher) {
-        return databaseAccessObject.delete(title, author, publisher);
+    public void delete(UUID uuid) {
+        databaseAccessObject.deleteById(uuid);
     }
 
-    @Override
-    public boolean update(Book newBook) {
-        return databaseAccessObject.update(newBook);
-    }
+//    public boolean update(Book newBook) {
+//        return databaseAccessObject.update(newBook);
+//    }
 }
