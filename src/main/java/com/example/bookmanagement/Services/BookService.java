@@ -35,11 +35,6 @@ public class BookService implements BookOperations {
     }
 
     @Override
-    public List<Book> query(UUID uuid, String title, String author, String publisher, Integer pageCount) {
-        return databaseAccessObject.query(uuid, title, author, publisher, pageCount);
-    }
-
-    @Override
     public boolean add(Book book) {
         return databaseAccessObject.add(book);
     }

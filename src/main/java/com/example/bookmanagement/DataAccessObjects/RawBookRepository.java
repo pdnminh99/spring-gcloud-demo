@@ -45,39 +45,6 @@ public class RawBookRepository implements BookOperations {
     }
 
     @Override
-    public List<Book> query(UUID uuid, String title, String author, String publisher, Integer pageCount) {
-        ArrayList<Book> queryBooks = new ArrayList<>();
-        if (Objects.nonNull(uuid)) {
-            queryBooks.add(query(uuid));
-            return queryBooks;
-        }
-        int size = books.size();
-        Book currentBook;
-        String currentTitle;
-        String currentAuthor;
-        String currentPublisher;
-        Integer currentPagesCount;
-
-        for (int i = 0; i < size; i++) {
-            currentBook = books.get(i);
-            currentTitle = currentBook.getTitle();
-            currentAuthor = currentBook.getAuthor();
-            currentPublisher = currentBook.getPublisher();
-            currentPagesCount = currentBook.getPagesCount();
-
-            if (
-                    title != null && title == currentTitle ||
-                            author != null && author == currentAuthor ||
-                            publisher != null && publisher == currentPublisher ||
-                            pageCount != null && pageCount == currentPagesCount
-            ) {
-                queryBooks.add(currentBook);
-            }
-        }
-        return queryBooks;
-    }
-
-    @Override
     public boolean add(Book book) {
         if (book == null) {
             return false;

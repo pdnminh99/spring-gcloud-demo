@@ -38,21 +38,6 @@ public class BookControllers implements BookOperations {
         return service.query(uuid);
     }
 
-    @Override
-    public List<Book> query(UUID uuid, String title, String author, String publisher, Integer pageCount) {
-        return null;
-    }
-
-//    @PostMapping
-//    public List<Book> query(@Nullable @JsonProperty("uuid") UUID uuid,
-//                            @Nullable @JsonProperty("title") String title,
-//                            @Nullable @JsonProperty("author") String author,
-//                            @Nullable @JsonProperty("publisher") String publisher,
-//                            @Nullable @JsonProperty("pagesCount") Integer pagesCount
-//    ) {
-//        return service.query(uuid, title, author, publisher, pagesCount);
-//    }
-
     @GetMapping(path = "{title}/{author}/{publisher}")
     public boolean add(@PathVariable("title") String title,
                        @PathVariable("author") String author,

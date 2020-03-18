@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Repository("cloudSQL")
@@ -46,11 +48,6 @@ public class CloudSQLBookRepository implements BookOperations {
                 .stream()
                 .findFirst()
                 .get();
-    }
-
-    @Override
-    public List<Book> query(UUID uuid, String title, String author, String publisher, Integer pageCount) {
-        return null;
     }
 
     @Override

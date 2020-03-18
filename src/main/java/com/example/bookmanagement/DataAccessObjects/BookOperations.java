@@ -14,8 +14,6 @@ public interface BookOperations {
 
     Book query(UUID uuid);
 
-    List<Book> query(UUID uuid, String title, String author, String publisher, Integer pageCount);
-
     boolean add(Book book);
 
     default boolean add(String title, String author, String publisher) {
