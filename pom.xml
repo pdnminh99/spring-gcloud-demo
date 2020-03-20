@@ -106,7 +106,7 @@
                 <version>2.2.0</version>
                 <configuration>
                     <version>${version}</version>
-                    <projectId>bookstore-271504</projectId>
+                    <projectId>book-app-instance</projectId>
                 </configuration>
             </plugin>
 

@@ -14,7 +14,7 @@ public class JdbcConfig {
     private final String DB_USER = System.getenv("DB_USER");
     private final String DB_PASS = System.getenv("DB_PASS");
     private final String CLOUD_SQL_CONNECTION_NAME = System.getenv("CLOUD_SQL_CONNECTION_NAME");
-    private final String CONNECTION_IP = "jdbc:mysql://34.87.80.228/BOOKSTORE";
+    private final String CONNECTION_IP = "jdbc:mysql://34.64.73.24/BOOKSTORE";
 
     private final String FULL_CONNECTION_NAME = String
             .format("jdbc:mysql:///%s?cloudSqlInstance=%s&socketFactory=com.google.cloud.sql.mysql.SocketFactory&user=%s&password=%s",
