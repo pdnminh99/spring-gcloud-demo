@@ -1,32 +1,36 @@
 package com.example.bookmanagement.SpringConfiguration;
 
+import com.example.bookmanagement.Models.DatabaseMetadata;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan
 public class JdbcConfig {
-    private final String DB_NAME = System.getenv("DB_NAME");
-    private final String DB_USER = System.getenv("DB_USER");
-    private final String DB_PASS = System.getenv("DB_PASS");
-    private final String CLOUD_SQL_CONNECTION_NAME = System.getenv("CLOUD_SQL_CONNECTION_NAME");
-    private final String CONNECTION_IP = "jdbc:mysql://34.64.73.24/BOOKSTORE";
 
-    private final String FULL_CONNECTION_NAME = String
-            .format("jdbc:mysql:///%s?cloudSqlInstance=%s&socketFactory=com.google.cloud.sql.mysql.SocketFactory&user=%s&password=%s",
-                    DB_NAME, CLOUD_SQL_CONNECTION_NAME, DB_USER, DB_PASS);
+    private final DatabaseMetadata metadata;
+
+    @Autowired
+    public JdbcConfig(DatabaseMetadata metadata) {
+        this.metadata = metadata;
+    }
 
     @Bean
+    @Scope("singleton")
+    @Lazy
     public DataSource mysqlDataSource() {
+        System.err.println("Confirming meta data before initialize DataSource.");
+        System.err.println(metadata.toString());
         return DataSourceBuilder.create()
-                .url(CLOUD_SQL_CONNECTION_NAME != null ? FULL_CONNECTION_NAME : CONNECTION_IP)
-                .driverClassName("com.mysql.cj.jdbc.Driver")
-                .password("admin")
-                .username("root")
+                .url(metadata.getDatabaseConnectionString())
+                .driverClassName(metadata.getDriver())
+                .password(metadata.getPassword())
+                .username(metadata.getUser())
                 .build();
     }
 }
