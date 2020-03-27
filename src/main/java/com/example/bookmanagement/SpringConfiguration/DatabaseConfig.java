@@ -20,6 +20,10 @@ public class DatabaseConfig {
 
     private String instanceName = System.getenv("CLOUD_SQL_CONNECTION_NAME");
 
+    private String bucketName;
+
+    private String projectId;
+
     @Value("${cloudSQL.databaseIP}")
     public void setDatabaseIP(String IP) {
         System.err.println("Collecting database IP: " + IP);
@@ -53,6 +57,16 @@ public class DatabaseConfig {
     @Bean
     public DatabaseMetadata getMetadata() {
         System.err.println("Initializing database metadata bean.");
-        return new DatabaseMetadata(databaseName, user, password, IP, databaseDriver, instanceName);
+        return new DatabaseMetadata(databaseName, user, password, IP, databaseDriver, instanceName, projectId, bucketName);
+    }
+
+    @Value("${cloud.projectId}")
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    @Value("${storage.bucketName}")
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
     }
 }

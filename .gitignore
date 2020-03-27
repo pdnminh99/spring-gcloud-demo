@@ -5,6 +5,7 @@ target/
 !**/src/test/**
 src/main/appengine/app.yaml
 src/main/resources/application.properties
+private/
 
 ### STS ###
 .apt_generated

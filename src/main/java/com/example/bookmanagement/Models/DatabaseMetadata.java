@@ -15,15 +15,21 @@ public class DatabaseMetadata {
 
     private final String instanceName;
 
+    private final String projectId;
+
+    private final String bucketName;
+
     private final boolean isAppEngine;
 
-    public DatabaseMetadata(String databaseName, String user, String password, String databasePublicIP, String driverName, String instanceName) {
+    public DatabaseMetadata(String databaseName, String user, String password, String databasePublicIP, String driverName, String instanceName, String projectId, String bucketName) {
         this.databaseName = databaseName;
         this.user = Objects.requireNonNullElse(user, "root");
         this.password = password;
         this.databasePublicIP = databasePublicIP;
         this.driverName = Objects.requireNonNullElse(driverName, "");
         this.instanceName = instanceName;
+        this.projectId = projectId;
+        this.bucketName = bucketName;
         isAppEngine = Objects.nonNull(instanceName);
     }
 
@@ -50,6 +56,18 @@ public class DatabaseMetadata {
         return driverName;
     }
 
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public String getBucketName() {
+        return bucketName;
+    }
+
+    public boolean checkAppEngineEnvironment() {
+        return isAppEngine;
+    }
+
     @Override
     public String toString() {
         return "DatabaseMetadata{" +
@@ -59,6 +77,8 @@ public class DatabaseMetadata {
                 ", databasePublicIP='" + databasePublicIP + '\'' +
                 ", driverName='" + driverName + '\'' +
                 ", instanceName='" + instanceName + '\'' +
+                ", projectId='" + projectId + '\'' +
+                ", bucketName='" + bucketName + '\'' +
                 ", isAppEngine=" + isAppEngine +
                 '}';
     }

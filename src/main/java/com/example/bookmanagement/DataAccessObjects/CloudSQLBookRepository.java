@@ -1,10 +1,12 @@
 package com.example.bookmanagement.DataAccessObjects;
 
 import com.example.bookmanagement.Models.Book;
+import com.example.bookmanagement.Models.FileObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,14 +20,26 @@ public class CloudSQLBookRepository implements BookOperations {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-//    public Iterable<Book> query(String keyword) {
-//        return null;
-//    }
+    public void saveFileMetadata(FileObject file) {
+        long currentTime = Instant.now().toEpochMilli();
+        String insertQuery = String.format("INSERT INTO Files(object, name, type) VALUES ('%s', '%s', '%s')",
+                currentTime,
+                file.getName(),
+                file.getContentType());
+        jdbcTemplate.execute(insertQuery);
+        file.setObjectId(String.valueOf(currentTime));
+    }
 
-//    @Override
-//    public boolean update(Book newBook) {
-//        return false;
-//    }
+    public FileObject getFileMetadata(String file) {
+        return jdbcTemplate.query(String.format("SELECT object, name, type FROM Files WHERE name='%s'", file),
+                (row, rowNo) -> new FileObject(
+                        row.getString("object"),
+                        row.getString("name"),
+                        row.getString("type")))
+                .stream()
+                .findFirst()
+                .orElse(null);
+    }
 
     @Override
     public <S extends Book> S save(S book) {
